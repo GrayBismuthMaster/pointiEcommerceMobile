@@ -1,7 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Estadisticas } from '../screens/Estadisticas/Estadisticas';
-import {ReservaCitasFCScreen} from '../screens/ReservaCitas/ReservaCitasFCScreen';
+// import {ReservaCitasFCScreen} from '../screens/ReservaCitas/ReservaCitasFCScreen';
+import {ClientesScreen} from '../screens/Clientes/ClientesScreen';
+import {PedidosScreen} from '../screens/Pedidos/PedidosScreen';
+
+
 import { PerfilUsuario } from '../screens/Usuario/PerfilUsuarioScreen';
 import { colores } from '../theme/appTheme';
 import { Platform, Text, View } from 'react-native';
@@ -10,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GaleriaImagenes } from '../screens/GaleriaImagenes/GaleriaImagenes';
 import { AvancesScreen } from '../screens/AvancesTratamiento/AvancesScreen';
 import {HomeScreen} from '../screens/Home/HomeScreen'
+import { ProductosScreen } from '../screens/Productos/ProductosScreen';
 
 export const TabsNavigator = () =>{
     return Platform.OS === 'ios' 
@@ -29,9 +34,7 @@ return (
             
         }}
         style ={{
-            flex: 1,
-
-            
+            flex: 1,            
         }}
                 
         screenOptions={({route}) =>({           
@@ -42,16 +45,16 @@ return (
                     case 'Home' : 
                         iconName = 'home';
                     break;
-                    case 'Reserva de Citas':
-                        iconName = 'event-note';
+                    case 'Clientes':
+                        iconName = 'people';
                     break
-                    case 'Historial de visitas':
-                        iconName = 'pie-chart';
+                    case 'Pedidos':
+                        iconName = 'shopping-bag';
                     break
-                    case 'Perfil Usuario':
-                        iconName = 'account-box';
+                    case 'Productos':
+                        iconName = 'inventory';
                     break
-                    case 'Avance del tratamiento' :
+                    case 'Galeria' :
                         iconName = 'visibility'
                     break
 
@@ -68,10 +71,10 @@ return (
 
     >
         <BottomTabAndroid.Screen name="Home" options = {{tabBarLabel : 'Home'}} component={HomeScreen} />
-        <BottomTabAndroid.Screen name="Reserva de Citas" options = {{tabBarLabel : 'Reserva de citas'}} component={ReservaCitasFCScreen} />
-        <BottomTabAndroid.Screen name="Historial de visitas" options = {{tabBarLabel : 'Estadísticas'}} component={Estadisticas} />
-        <BottomTabAndroid.Screen name="Perfil Usuario" component={PerfilUsuario} />
-        <BottomTabAndroid.Screen name="Avance del tratamiento" options = {{tabBarLabel : 'Avances'}} component={AvancesScreen} />
+        <BottomTabAndroid.Screen name="Clientes" options = {{tabBarLabel : 'Clientes'}} component={ClientesScreen} />
+        <BottomTabAndroid.Screen name="Pedidos" options = {{tabBarLabel : 'Pedidos'}} component={PedidosScreen} />
+        <BottomTabAndroid.Screen name="Productos" component={ProductosScreen} />
+        <BottomTabAndroid.Screen name="Galeria" options = {{tabBarLabel : 'Productos'}} component={AvancesScreen} />
      </BottomTabAndroid.Navigator>
 );
 }
@@ -88,29 +91,36 @@ const TabsIOSNavigator = () => {
             backgroundColor: colores.background
         }}
         screenOptions={({route}) =>({
-            tabBarIcon: ({focused, color, size}) => {
+            tabBarIcon: ({focused, color}) => {
                 console.log(route.name)
                 let iconName : string =""; 
                 switch(route.name){
-                    case 'Reserva de Citas':
-                        iconName = 'T1';
+                    case 'Home' : 
+                        iconName = 'home';
+                    break;
+                    case 'Clientes':
+                        iconName = 'people';
                     break
-                    case 'Estadisticas':
-                        iconName = 'T2';
+                    case 'Pedidos':
+                        iconName = 'shopping-bag';
                     break
-                    case 'Perfil Usuario':
-                        iconName = 'T3';
+                    case 'Productos':
+                        iconName = 'inventory';
+                    break
+                    case 'Galeria' :
+                        iconName = 'visibility'
                     break
 
                 }
-                return <Text style={{color}}>{iconName}</Text>
-            }
+                return <Text><Icon name={iconName} size={22} color={color} /></Text>;
+            },
         }) }
     >
-        <BottomTabIOS.Screen name="Reserva de Citas" component={ReservaCitasScreen}  />
-        <BottomTabIOS.Screen name="Estadisticas" component={Estadisticas} />
-        <BottomTabIOS.Screen name="Perfil Usuario" component={PerfilUsuario} />
-        <BottomTabIOS.Screen name="Avance del tratamiento" options = {{tabBarLabel : 'Avances'}} component={GaleriaImagenes} />
+        <BottomTabIOS.Screen name="Home" options = {{tabBarLabel : 'Home'}} component={HomeScreen} />
+        <BottomTabIOS.Screen name="Clientes" options = {{tabBarLabel : 'Clientes'}} component={ClientesScreen} />
+        <BottomTabIOS.Screen name="Pedidos" options = {{tabBarLabel : 'Pedidos'}} component={Estadisticas} />
+        <BottomTabIOS.Screen name="Productos"  options={{tabBarLabel : 'Productos'}} component={ProductosScreen} />
+        <BottomTabIOS.Screen name="Galeria" options = {{tabBarLabel : 'Galeria'}} component={AvancesScreen} />
     </BottomTabIOS.Navigator>
   );
 }

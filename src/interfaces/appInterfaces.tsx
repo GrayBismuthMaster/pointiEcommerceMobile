@@ -77,97 +77,38 @@ export interface Tratamiento {
     id_historia_clinica: IdHistoriaClinica;
 }
 
-/*
-    INTERFACES DE HISTORIA CLINICA
-*/
 
-export interface HistoriaClinica {
-    _id: string;
-    motivo_consulta: string;
-    antecedentes_patologicos_personales: string;
-    antecedentes_patologicos_familiares: string;
-    medicacion_actual_continua: string;
-    tratamientos_anteriores: string;
-    examen_fisico: string;
-    diagnostico: string;
-    tratamiento_actual: string;
-    parte_cuerpo_seleccionado: string;
-    id_usuario: string;
-    createdAt: Date;
-    updatedAt: Date;
+export interface Cliente{
+    id : string;
+    nombre : string
+    apellido : string
+    empresa : string
+    email : string
+    telefono : string
+}
+export interface Producto{
+    id : string;
+    nombre : string
+    precio : number
+    existencia : number
 }
 
-/*
-    INTERFACES DE MENU 
-*/
-export interface MenuItem {
-    _id : string;
-    name: string;
-    icon: string;
-    route : string;
+export interface Pedido{
+    id : string
+    pedido : PedidoGrupo[]    
+    cliente : Cliente
+    vendedor : string
+    total : string
+    estado : EstadoPedido
 }
-
-/*
-    INTERFACES DE CITAS
-*/
-export interface IdUsuario {
-    _id: string;
-    nombre: string;
+export interface PedidoGrupo{
+    id : string;
+    cantidad : number;
+    nombre : string;
+    precio : number;
 }
-
-export interface IdProfesional {
-    _id: string;
-    nombre_profesional: string;
-    apellido_profesional: string;
-}
-
-export interface IdEspecialidad {
-    _id: string;
-    nombre_especialidad: string;
-}
-
-export interface IdConsultorio {
-    _id: string;
-    nombre_consultorio: string;
-}
-
-export interface ReservaCita {
-    motivo_reserva: string;
-    id: string;
-    fecha_hora_inicio_reserva: string;
-    fecha_hora_fin_reserva: string;
-    estado_reserva: string;
-    id_usuario: IdUsuario;
-    id_profesional: IdProfesional;
-    id_especialidad: IdEspecialidad;
-    id_consultorio: IdConsultorio;
-}
-
-//CONSULTORIOS
-export interface IdProfesionalGenerar {
-    _id: string;
-    nombre_profesional: string;
-    apellido_profesional: string;
-    cedula_profesional: string;
-    telefono_profesional: string;
-    direccion_profesional: string;
-    correo_profesional: string;
-    imagen_profesional: string;
-    estado_profesional: string;
-}
-
-export interface IdEspecialidadGenerar {
-    _id: string;
-    nombre_especialidad: string;
-    id_profesional: IdProfesional[];
-    estado_especialidad: string;
-}
-
-export interface Consultorio{
-    _id: string;
-    nombre_consultorio: string;
-    direccion_consultorio: string;
-    horario_atencion_consultorio: string;
-    id_especialidad: IdEspecialidad[];
-    estado_consultorio: boolean;
+export enum EstadoPedido{
+    PENDIENTE,
+    COMPLETADO,
+    CANCELADO 
 }

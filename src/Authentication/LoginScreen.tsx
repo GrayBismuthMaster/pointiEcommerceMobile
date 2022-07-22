@@ -8,8 +8,8 @@ import { AuthContext } from '../context/AuthContext'
 import { useForm } from '../hooks/useForm'
 import { RootStackParams } from '../Navigation/StackNavigator'
 import { loginStyles } from '../theme/loginTheme'
-
 interface Props extends NativeStackScreenProps<RootStackParams,'LoginScreen'>{};
+
 
 export const LoginScreen = ({navigation} : Props) => {
     /*
@@ -21,7 +21,7 @@ export const LoginScreen = ({navigation} : Props) => {
     */
    
     const {signIn, errorMessage, removeError} = useContext(AuthContext);
-
+   
     //USEFORM
     const {email, password, onChange} = useForm({
         email : '',
@@ -29,7 +29,7 @@ export const LoginScreen = ({navigation} : Props) => {
     })
 
     useEffect(() => {
-        if(errorMessage .length ===0) return;
+        if(errorMessage.length === 0) return;
         Alert.alert(
             'Login incorrecto', 
             errorMessage,
@@ -55,7 +55,6 @@ export const LoginScreen = ({navigation} : Props) => {
         }
         signIn(obj)
     }
-
     return (
             <>
                 {/*BACKGROUND */}

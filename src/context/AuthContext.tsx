@@ -4,11 +4,22 @@ import AsyncStorage  from '@react-native-async-storage/async-storage';
 import dermatologiaApi from '../api/dermatologiaApi';
 import { Usuario, LoginResponse, LoginData, RegisterData } from '../interfaces/appInterfaces'
 import { authReducer, AuthState } from './authReducer';
+import { useMutation, gql } from '@apollo/client';
+const AUTENTICAR_USUARIO = gql`
+    mutation autenticarUsuario($input:AutenticarInput)
+    {
+        autenticarUsuario(input:$input)
+        {
+            token
+        }
+    }
+`;
+
 type AuthContextProps = {
     errorMessage: string;
     token: string | null;
     user: Usuario | null;
-    status : 'checking' | 'authenticated' | 'not-authenticated'
+    status : 'not-authenticated' | 'checking' | 'authenticated'  
     signUp : (registerData : RegisterData) => void
     signIn : (loginData: LoginData) => void
     logOut : ()=> void
@@ -24,6 +35,9 @@ const authInitialState : AuthState = {
 
 export const AuthContext = createContext({} as AuthContextProps);
 export const AuthProvider = ({children} : any)=>{
+    
+    const [autenticarUsuario] = useMutation(AUTENTICAR_USUARIO);
+
 
     const [state, dispatch] = useReducer(authReducer, authInitialState);
     useEffect(()=>{
@@ -32,19 +46,17 @@ export const AuthProvider = ({children} : any)=>{
     //Verificar token 
     const checkToken = async() =>{
         const tokenVerificado = await AsyncStorage.getItem('token');
+        const userVerificado = await AsyncStorage.getItem('user');
         console.log("token verificado")
         console.log(tokenVerificado)
         if(!tokenVerificado){
             return dispatch({type: 'notAuthenticated'})
         }
-        const resp = await dermatologiaApi.get('/auth/verify')
-        console.log("respuesta de verificacione de token ", resp.data);
-        
         dispatch({
             type: 'signUp',
             payload :{
-                token: resp.data.token ,
-                user : resp.data.user
+                token: tokenVerificado, 
+                user : userVerificado ? JSON.parse(userVerificado) : ''
             }
         })
         
@@ -55,10 +67,20 @@ export const AuthProvider = ({children} : any)=>{
    const  signIn = async (obj : LoginData)=>{
         try{
             const {email, password} = obj
-            const resp = await dermatologiaApi.post('/auth/signin', {email, password})
-            console.log(resp.data);
-            const token = resp.data.token;
-            const user = resp.data.datosUsuario;
+            const {data} = await autenticarUsuario({
+                variables: {
+                    input: {
+                        email,
+                        password
+                    }
+                }
+            })
+            console.log("entta");
+            console.log(data)
+            const {token, user} = data.autenticarUsuario;
+            console.log('usuario', user);
+            await AsyncStorage.setItem('token',token);
+            await AsyncStorage.setItem('user',JSON.stringify(user));
             dispatch({
                 type: 'signUp',
                 payload :{
@@ -67,7 +89,6 @@ export const AuthProvider = ({children} : any)=>{
                 }
             })
 
-            await AsyncStorage.setItem('token',token);
         }catch(error:any){
             console.log(error);
             const errorMessage = error.message;
@@ -111,7 +132,8 @@ export const AuthProvider = ({children} : any)=>{
              signUp,
              signIn,
              logOut, 
-             removeError
+             removeError,
+             status: state.status
         }}>
             {children}
         </AuthContext.Provider>

@@ -13,7 +13,7 @@ export const GradientBackground = ({children} : Props) => {
       }}>
           
             <LinearGradient
-                colors={['#ef629f85', '#eecda375','#decde048']}
+                colors={['white', 'white','black']}
                 //colors = {['#6190e8be','#a7bfe89c', '#ffffff']}
                 style = {{
                     ...StyleSheet.absoluteFillObject

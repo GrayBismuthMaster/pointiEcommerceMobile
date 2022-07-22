@@ -18,8 +18,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Reserva de Citas'
-                )
+                navigation.navigate('Reserva de Citas')
             }}
         >
             <View style = {styles.card}>
@@ -27,7 +26,7 @@ export const HomeScreen = () => {
                     source={{uri : 'https://images.pexels.com/photos/7595265/pexels-photo-7595265.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}}
                     style={{height:'50%', width:'30%'}}
                 />
-                <Text>Reserva de Citas</Text>
+                <Text>Usuarios</Text>
             </View>
             
         </TouchableOpacity>
@@ -35,8 +34,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Historial de visitas'
-                )
+                navigation.navigate('Historial de visitas')
             }}
         >
             <View style = {styles.card}>
@@ -44,7 +42,7 @@ export const HomeScreen = () => {
                         source={{uri : 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'}}
                         style={{height:'50%', width:'30%'}}
                     />
-                <Text>Estadísticas de visitas al consultorio</Text>
+                <Text>Pedidos</Text>
              </View>
        
         </TouchableOpacity>
@@ -52,8 +50,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Perfil Usuario'
-                )
+                navigation.navigate('Perfil Usuario')
             }}
         >
             <View style = {styles.card}>
@@ -69,8 +66,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Avance del tratamiento'
-                )
+                navigation.navigate('Avance del tratamiento')
             }}
         >
             <View style = {styles.card}>

@@ -30,12 +30,17 @@ export const authReducer = (state : AuthState, action : AuthAction) : AuthState 
                 ...state,
                 errorMessage: ''
             }
+        // case 'signIn' : 
+        //     return {
+        //         ...state,
+        //         token : action.payload.token,
+        //     }
 
         case 'signUp' :
             return {
                 ...state,
                 errorMessage: '',
-                status: "authenticated",
+                status: 'authenticated',
                 token: action.payload.token,
                 user : action.payload.user
             }
