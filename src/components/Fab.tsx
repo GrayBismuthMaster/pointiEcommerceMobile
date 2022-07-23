@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         left: 5
     },
     fab:{
-        backgroundColor: '#5856D6',
+        backgroundColor: 'rgba(255,255,255,0.9)',
         width: 60,
         height: 60,
         borderRadius: 100,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     fabText:{
-        color: "white",
+        color: "black",
         fontSize: 25,
         fontWeight: 'bold',
         alignSelf : 'center',

@@ -5,7 +5,7 @@ import {
     ACTUALIZAR_TOTAL
 } from '../../types'
 
-const PedidoReducer =  (state, action) => {
+const PedidoReducer =  (state : any, action:any) => {
     switch(action.type){
         case SELECCIONAR_CLIENTE :
             return {

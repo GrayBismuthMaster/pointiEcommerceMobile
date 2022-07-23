@@ -23,6 +23,7 @@ const PedidoState = ({children}) =>{
         })
     }
     const agregarProductos = (productosSeleccionados) =>{
+        console.log("productos seleccionados en Pedido State",productosSeleccionados);
         console.log("productos seleccionados del state")
         console.log(state.productos);
         let nuevoState;
@@ -41,7 +42,8 @@ const PedidoState = ({children}) =>{
             payload : nuevoState
         })
     }
-    const cantidadProductos = (nuevoProducto)=>{
+    const cantidadProductos = (nuevoProducto : number)=>{
+        console.log('cantidad de productos', nuevoProducto);
         dispatch({
             type : CANTIDAD_PRODUCTOS,
             payload : nuevoProducto

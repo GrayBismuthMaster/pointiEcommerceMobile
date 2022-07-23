@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import MultiSelect from 'react-native-multiple-select';
 import {gql, useQuery} from '@apollo/client'
-import { ScrollView, Text, TextInput, View, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, Text, TextInput, View, KeyboardAvoidingView, LogBox } from 'react-native';
 import PedidoContext from '../../context/pedidos/PedidoContext';
+import ResumenProducto from './ResumenProducto';
 const OBTENER_PRODUCTOS = gql`
     query obtenerProductos{
         obtenerProductos{
@@ -24,10 +25,11 @@ const AsignarProductos = () => {
     //CONTEXT
     
     const pedidoContext = useContext(PedidoContext);
-    const {agregarProductos} = pedidoContext;
+    const {agregarProductos}:any = pedidoContext;
 
    
     useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
         console.log("productos del asignar producto",data);
         if (data) {
             const arrayNuevo = data.obtenerProductos.map((producto : any) => {
@@ -47,9 +49,15 @@ const AsignarProductos = () => {
     }, [data])
     
     useEffect(() => {
-        console.log("Productos enviados al asignar")
-        console.log(productosSeleccionados)
-        agregarProductos(productosSeleccionados)
+        if(productosSeleccionados){
+            let productosEstadoGlobal : any= [];
+            productosSeleccionados.map((producto : any)=>{
+                productosEstadoGlobal.push(JSON.parse(producto))
+            })
+            console.log("Productos enviados al estado global",productosEstadoGlobal);
+            agregarProductos(productosEstadoGlobal )
+        }
+        
       return () => {
         console.log("unmount")
       }
@@ -64,8 +72,16 @@ const AsignarProductos = () => {
     }
   return (
     <>
-        <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
-            <ScrollView>
+        <KeyboardAvoidingView 
+            style={{flex: 1}} 
+            behavior="padding"
+            enabled
+            
+        >
+            <ScrollView
+                style={{flex: 1}}
+                // horizontal={true}
+            >
                 <MultiSelect
                     // hideTags
                     // tagTextColor='red'
@@ -86,99 +102,60 @@ const AsignarProductos = () => {
                             borderRadius: 30,
                             marginTop: 10,
                             marginBottom: 10,
-                            paddingLeft: 10,
+                            paddingLeft: 20,
                             paddingRight: 10,
                             paddingTop: 10,
                             paddingBottom: 10,
-                            color: 'white',
+                            color: 'black',
                             fontSize: 20,
                             fontWeight: 'bold',
-                            textAlign: 'center'
-
+                            textAlign: 'center',
+                            flexDirection : 'column'
                         }
                     }}
                     tagRemoveIconColor="red"
-                    tagBorderColor="green"
-                    selectedItemTextColor="green"
-                    
+
                 />
                 {
+                    
+                    <Text style={{
+                        fontSize : 15,
+                        marginVertical : 5
+                    }}>                       
+                        3. Ajustar las cantidades del producto
+                    </Text>
+                }
+                {
                     productosSeleccionados.length > 0 ?
-                    <ScrollView
-                        style={{
-                            flex : 1,
-                            flexDirection : 'column',
-                        }}
-                    >
-                        {/* <KeyboardAvoidingView
-                            style={{
-                                flex : 1,
-                                flexDirection : 'column',
-                                justifyContent : 'center',
-                                alignItems : 'center',
-                            }}
-                            
-                            keyboardVerticalOffset={32}
-                        > */}
-                                {
-                                    productosSeleccionados.map((producto : any)=>{
-                                        return(
-                                            <ScrollView>
-                                                <View
-                                                    style={{
-                                                        flex : 1,
-                                                        flexDirection : 'row',
-                                                        justifyContent : 'center',
-                                                        alignItems : 'center',
-                                                        marginTop : 10,
-                                                        marginBottom : 10,
-                                                        marginLeft : 10,
-                                                        marginRight : 10,
-                                                        borderWidth : 1,
-                                                        borderColor : 'white',
-                                                        borderRadius : 10,
-                                                        backgroundColor : 'rgba(0,0,0,0.5)',
-                                                        padding : 10,
-                                                    }}
+                    
+                    productosSeleccionados.map((producto : any)=>{
+                        return(
+                                <KeyboardAvoidingView
+                                    style={{
+                                        flex : 1,
+                                        flexDirection : 'column',
+                                        justifyContent : 'center',
+                                        alignItems : 'center',
+                                        marginTop : 10,
+                                        marginBottom : 10,
+                                        marginLeft : 10,
+                                        marginRight : 10,
+                                        borderWidth : 1,
+                                        borderColor : 'white',
+                                        borderRadius : 10,
+                                        backgroundColor : 'rgba(255,255,255,0.5)',
+                                        padding : 10,
+                                    }}
 
-                                                >
-                                                    <Text
-                                                        style={{
-                                                            color : 'black',
-                                                            fontSize : 15,
-                                                            fontWeight : 'bold',
-                                                            textAlign : 'center',
-                                                            marginTop : 10,
-                                                            marginBottom : 10,
-                                                        }}
-                                                    >
-                                                            {JSON.parse(producto).nombre} - {JSON.parse(producto).precio} : 
-                                                    </Text>
-                                                        <TextInput keyboardType="numeric" placeholder='Cantidad' style = {{
-                                                            color : 'black',
-                                                        }} placeholderTextColor={"black"}/>
-                                                </View>
-                                            
-                                                
-                                            </ScrollView>
-                                                
-
-                                                
-                                        )
-                                    })
-                                }
+                                >
+                                    <ResumenProducto
+                                        key={JSON.parse(producto).id}
+                                        producto={JSON.parse(producto)}
+                                    />
+                                </KeyboardAvoidingView>
+                        )
+                    })
                         
-                        {/* </KeyboardAvoidingView> */}
-                        <Text
-                            style = {{
-                                fontSize : 20,
-                                fontWeight : 'bold',
-                                color : 'black',
-                            }}
-                        >
-                                
-                        </Text>
-                    </ScrollView>
                     :
                     <Text
                         style={{
@@ -190,6 +167,7 @@ const AsignarProductos = () => {
                         No hay productos seleccionados
                     </Text>
                 }
+                
             </ScrollView>
         </KeyboardAvoidingView>
         {/* <Select

@@ -6,6 +6,7 @@ import { GradientBackground } from '../../components/GradientBackground';
 import {useEffect} from 'react';
 import { ModalScreen } from '../../components/Modal/ModalScreen';
 import { Producto } from '../../interfaces/appInterfaces';
+import { Fab } from '../../components/Fab';
 const OBTENER_PRODUCTOS = gql`
     query obtenerProductos{
         obtenerProductos{
@@ -245,11 +246,6 @@ export const ProductosScreen = () => {
     <GradientBackground> 
         <View style = {styles.mainContainer}>
             <ScrollView > 
-                
-                <Button title = "Agregar Producto" onPress = {()=>{
-                    setModalVisible(!modalVisible);
-                    setTipoAccion('agregar');
-                }}/>
                 <ModalScreen visible = {modalVisible}>
                     {
                         tipoAccion === 'eliminar' 
@@ -265,29 +261,29 @@ export const ProductosScreen = () => {
                             :
                         tipoAccion === 'editar'
                             ?
-                        <>
-                            <Text style={{backgroundColor : 'green'}}>Editar Producto</Text>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Nombre' value={datosProducto.nombre} onChangeText={(e)=>{setDatosProducto({...datosProducto, nombre : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Precio' value={datosProducto.precio} onChangeText={(e)=>{setDatosProducto({...datosProducto, precio : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Existencia' value={datosProducto.existencia} onChangeText={(e)=>{setDatosProducto({...datosProducto, existencia: e})}}/>
+                        <View style= {styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Editar Producto</Text>
+                            <TextInput placeholder='Nombre' value={datosProducto.nombre} onChangeText={(e)=>{setDatosProducto({...datosProducto, nombre : e})}}/>
+                            <TextInput placeholder='Precio' value={datosProducto.precio} onChangeText={(e)=>{setDatosProducto({...datosProducto, precio : e})}}/>
+                            <TextInput placeholder='Existencia' value={datosProducto.existencia} onChangeText={(e)=>{setDatosProducto({...datosProducto, existencia: e})}}/>
                             <Button
                                 title="Editar"
                                 onPress={() => setConfirmarUpdate(!confirmarUpdate)}
                             />
-                        </>
+                        </View>
                             :
                         tipoAccion === 'agregar'
                             ?
-                        <>
-                            <Text style={{backgroundColor : 'green'}}>Agregar Producto</Text>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Nombre' value={datosProducto.nombre} onChangeText={(e)=>{setDatosProducto({...datosProducto, nombre : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Precio' value={datosProducto.precio} onChangeText={(e)=>{setDatosProducto({...datosProducto, precio : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Existencia' value={datosProducto.existencia} onChangeText={(e)=>{setDatosProducto({...datosProducto, existencia: e})}}/>
+                        <View style= {styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Agregar Producto</Text>
+                            <TextInput placeholder='Nombre' value={datosProducto.nombre} onChangeText={(e)=>{setDatosProducto({...datosProducto, nombre : e})}}/>
+                            <TextInput placeholder='Precio' value={datosProducto.precio} onChangeText={(e)=>{setDatosProducto({...datosProducto, precio : e})}}/>
+                            <TextInput placeholder='Existencia' value={datosProducto.existencia} onChangeText={(e)=>{setDatosProducto({...datosProducto, existencia: e})}}/>
                             <Button
                                 title="Agregar"
                                 onPress={() => setConfirmarAgregar(!confirmarAgregar)}
                             />
-                        </>
+                        </View>
                             :
                         <>
                         </>
@@ -328,10 +324,18 @@ export const ProductosScreen = () => {
                 }
             </ScrollView>
         </View>     
-        
+        <Fab 
+            title = "+" 
+            onPress = {()=>{
+                setModalVisible(!modalVisible);
+                setTipoAccion('agregar');
+            }}
+            position = "right"
+        />
     </GradientBackground>
   )
 }
+
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -343,24 +347,25 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginVertical : '8%',
-        color : 'red',
+        color : 'rgba(0,0,0,0.8)',
         alignSelf : 'center'
     },
     title: {
         fontWeight: 'bold',
         fontSize: 14,
         paddingHorizontal : '3%',
+        color : 'rgba(255,255,255,0.8)',
     },
     titlesContainer: {
         flex : 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: 'blue',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        marginHorizontal : '2%',
         
     },
     clienteContainer : {
-        backgroundColor : 'red',
         flex : 1,
         marginVertical : '3%',
         justifyContent : 'center',
@@ -372,12 +377,25 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'space-around',
         alignItems : 'center',
-        backgroundColor : 'blue',
+        backgroundColor : 'rgba(255,255,255,0.8)',
     },
     value : {
         flex: 1,
         fontSize : 10,
         marginHorizontal : '2%',
-
+        color : 'rgba(0,0,0,0.8)',
     },
+    modalContainer : {
+        width : '90%',
+        height : '80%',
+        backgroundColor : 'rgba(0,0,0,0.8)',
+    },
+    modalTitle : {
+        fontSize : 20,
+        fontWeight : 'bold',
+        color : 'rgba(255,255,255,0.8)',
+        marginVertical : '3%',
+        marginHorizontal : '3%',
+        alignSelf : 'center'
+    }
 })

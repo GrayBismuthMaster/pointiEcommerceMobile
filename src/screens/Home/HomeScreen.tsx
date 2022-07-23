@@ -18,15 +18,15 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Reserva de Citas')
+                navigation.navigate('Clientes')
             }}
         >
             <View style = {styles.card}>
                 <Image
-                    source={{uri : 'https://images.pexels.com/photos/7595265/pexels-photo-7595265.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}}
+                    source={{uri : 'https://images.pexels.com/photos/3801426/pexels-photo-3801426.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3801426.jpg&fm=jpg'}}
                     style={{height:'50%', width:'30%'}}
                 />
-                <Text>Usuarios</Text>
+                <Text style={styles.textCard}>CLIENTES</Text>
             </View>
             
         </TouchableOpacity>
@@ -34,15 +34,15 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Historial de visitas')
+                navigation.navigate('Pedidos')
             }}
         >
             <View style = {styles.card}>
                     <Image
-                        source={{uri : 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'}}
+                        source={{uri : 'https://images.pexels.com/photos/5980870/pexels-photo-5980870.jpeg?cs=srgb&dl=pexels-karolina-grabowska-5980870.jpg&fm=jpg'}}
                         style={{height:'50%', width:'30%'}}
                     />
-                <Text>Pedidos</Text>
+                <Text style={styles.textCard}>PEDIDOS</Text>
              </View>
        
         </TouchableOpacity>
@@ -50,20 +50,20 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Perfil Usuario')
+                navigation.navigate('Productos')
             }}
         >
             <View style = {styles.card}>
                     <Image
-                        source={{uri : 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}}
+                        source={{uri : 'https://images.pexels.com/photos/1667077/pexels-photo-1667077.jpeg?auto=compress&cs=tinysrgb&w=600'}}
                         style={{height:'50%', width:'30%'}}
                     />
-                <Text>Perfil del Usuario</Text>
+                <Text style={styles.textCard}>PRODUCTOS</Text>
             </View>
 
         </TouchableOpacity>
          
-        <TouchableOpacity
+        {/* <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
                 navigation.navigate('Avance del tratamiento')
@@ -74,9 +74,9 @@ export const HomeScreen = () => {
                         source={{uri : 'https://images.pexels.com/photos/8090147/pexels-photo-8090147.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'}}
                         style={{height:'50%', width:'30%'}}
                     />
-                <Text>Avances del paciente en el tratamiento</Text>
+                <Text style={styles.textCard}>Avances del paciente en el tratamiento</Text>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         
     </SafeAreaView>
   )
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         
             width : widthScreen*.6,
             height : heightScreen*.2,
-            backgroundColor : '#c475964c',
+            backgroundColor : 'rgba(0, 0, 102, .5)',
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius : 10,
@@ -102,5 +102,12 @@ const styles = StyleSheet.create({
             elevation: 8,
 
         
+    },
+    textCard : {
+        fontSize : widthScreen * 0.05,
+        fontWeight : 'bold',
+        color : '#fff',
+        textAlign : 'center',
+        marginTop : heightScreen * 0.02,
     }
 })

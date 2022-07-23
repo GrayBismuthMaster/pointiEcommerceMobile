@@ -6,6 +6,7 @@ import { GradientBackground } from '../../components/GradientBackground';
 import {useEffect} from 'react';
 import { ModalScreen } from '../../components/Modal/ModalScreen';
 import { Cliente } from '../../interfaces/appInterfaces';
+import { Fab } from '../../components/Fab';
 const OBTENER_CLIENTES_USUARIO = gql`
       query obtenerClientesVendedor {
         obtenerClientesVendedor{
@@ -258,15 +259,21 @@ export const ClientesScreen = () => {
         
         Alert.alert('Exito', 'Cliente creado correctamente');
     }
+
+
+    const presionado = ()=>{
+            console.log("Presionado")
+            setModalVisible(!modalVisible);
+            setTipoAccion('agregar');
+        
+    }
   return (
     <GradientBackground> 
         <View style = {styles.mainContainer}>
+            
             <ScrollView > 
                 
-                <Button title = "Agregar Cliente" onPress = {()=>{
-                    setModalVisible(!modalVisible);
-                    setTipoAccion('agregar');
-                }}/>
+                {/* <Button title = "Agregar Cliente" /> */}
                 <ModalScreen visible = {modalVisible}>
                     {
                         tipoAccion === 'eliminar' 
@@ -282,33 +289,33 @@ export const ClientesScreen = () => {
                             :
                         tipoAccion === 'editar'
                             ?
-                        <>
-                            <Text style={{backgroundColor : 'green'}}>Editar Cliente</Text>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Nombre' value={datosCliente.nombre} onChangeText={(e)=>{setDatosCliente({...datosCliente, nombre : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Apellido' value={datosCliente.apellido} onChangeText={(e)=>{setDatosCliente({...datosCliente, apellido : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Empresa' value={datosCliente.empresa} onChangeText={(e)=>{setDatosCliente({...datosCliente, empresa : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Email' value={datosCliente.email} onChangeText={(e)=>{setDatosCliente({...datosCliente, email : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Telefono' value={datosCliente.telefono} onChangeText={(e)=>{setDatosCliente({...datosCliente, telefono : e})}}/>
+                        <View style ={styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Editar Cliente</Text>
+                            <TextInput placeholder='Nombre' value={datosCliente.nombre} onChangeText={(e)=>{setDatosCliente({...datosCliente, nombre : e})}}/>
+                            <TextInput placeholder='Apellido' value={datosCliente.apellido} onChangeText={(e)=>{setDatosCliente({...datosCliente, apellido : e})}}/>
+                            <TextInput placeholder='Empresa' value={datosCliente.empresa} onChangeText={(e)=>{setDatosCliente({...datosCliente, empresa : e})}}/>
+                            <TextInput placeholder='Email' value={datosCliente.email} onChangeText={(e)=>{setDatosCliente({...datosCliente, email : e})}}/>
+                            <TextInput placeholder='Telefono' value={datosCliente.telefono} onChangeText={(e)=>{setDatosCliente({...datosCliente, telefono : e})}}/>
                             <Button
                                 title="Editar"
                                 onPress={() => setConfirmarUpdate(!confirmarUpdate)}
                             />
-                        </>
+                        </View>
                             :
                         tipoAccion === 'agregar'
                             ?
-                        <>
-                            <Text style={{backgroundColor : 'green'}}>Agregar Cliente</Text>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Nombre' value={datosCliente.nombre} onChangeText={(e)=>{setDatosCliente({...datosCliente, nombre : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Apellido' value={datosCliente.apellido} onChangeText={(e)=>{setDatosCliente({...datosCliente, apellido : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Empresa' value={datosCliente.empresa} onChangeText={(e)=>{setDatosCliente({...datosCliente, empresa : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Email' value={datosCliente.email} onChangeText={(e)=>{setDatosCliente({...datosCliente, email : e})}}/>
-                            <TextInput style={{backgroundColor : 'green'}} placeholder='Telefono' value={datosCliente.telefono} onChangeText={(e)=>{setDatosCliente({...datosCliente, telefono : e})}}/>
+                        <View style= {styles.modalContainer}>
+                            <Text style={styles.modalTitle}>Agregar Cliente</Text>
+                            <TextInput placeholder='Nombre' value={datosCliente.nombre} onChangeText={(e)=>{setDatosCliente({...datosCliente, nombre : e})}}/>
+                            <TextInput placeholder='Apellido' value={datosCliente.apellido} onChangeText={(e)=>{setDatosCliente({...datosCliente, apellido : e})}}/>
+                            <TextInput placeholder='Empresa' value={datosCliente.empresa} onChangeText={(e)=>{setDatosCliente({...datosCliente, empresa : e})}}/>
+                            <TextInput placeholder='Email' value={datosCliente.email} onChangeText={(e)=>{setDatosCliente({...datosCliente, email : e})}}/>
+                            <TextInput placeholder='Telefono' value={datosCliente.telefono} onChangeText={(e)=>{setDatosCliente({...datosCliente, telefono : e})}}/>
                             <Button
                                 title="Agregar"
                                 onPress={() => setConfirmarAgregar(!confirmarAgregar)}
                             />
-                        </>
+                        </View>
                             :
                         <>
                         </>
@@ -354,6 +361,7 @@ export const ClientesScreen = () => {
             </ScrollView>
         </View>     
         
+        <Fab title='+' position='right' onPress={presionado}/>
     </GradientBackground>
   )
 }
@@ -368,24 +376,25 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginVertical : '8%',
-        color : 'red',
+        color : 'rgba(0,0,0,0.8)',
         alignSelf : 'center'
     },
     title: {
         fontWeight: 'bold',
         fontSize: 14,
         paddingHorizontal : '3%',
+        color : 'rgba(255,255,255,0.8)',
     },
     titlesContainer: {
         flex : 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: 'blue',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        marginHorizontal : '2%',
         
     },
     clienteContainer : {
-        backgroundColor : 'red',
         flex : 1,
         marginVertical : '3%',
         justifyContent : 'center',
@@ -397,12 +406,25 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'space-around',
         alignItems : 'center',
-        backgroundColor : 'blue',
+        backgroundColor : 'rgba(255,255,255,0.8)',
     },
     value : {
         flex: 1,
         fontSize : 10,
         marginHorizontal : '2%',
-
+        color : 'rgba(0,0,0,0.8)',
     },
+    modalContainer : {
+        width : '90%',
+        height : '80%',
+        backgroundColor : 'rgba(0,0,0,0.8)',
+    },
+    modalTitle : {
+        fontSize : 20,
+        fontWeight : 'bold',
+        color : 'rgba(255,255,255,0.8)',
+        marginVertical : '3%',
+        marginHorizontal : '3%',
+        alignSelf : 'center'
+    }
 })

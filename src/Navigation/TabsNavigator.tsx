@@ -31,7 +31,6 @@ return (
         sceneAnimationEnabled ={true}
         barStyle = {{
             backgroundColor: colores.primary,
-            
         }}
         style ={{
             flex: 1,            
@@ -74,7 +73,7 @@ return (
         <BottomTabAndroid.Screen name="Clientes" options = {{tabBarLabel : 'Clientes'}} component={ClientesScreen} />
         <BottomTabAndroid.Screen name="Pedidos" options = {{tabBarLabel : 'Pedidos'}} component={PedidosScreen} />
         <BottomTabAndroid.Screen name="Productos" component={ProductosScreen} />
-        <BottomTabAndroid.Screen name="Galeria" options = {{tabBarLabel : 'Productos'}} component={AvancesScreen} />
+        {/* <BottomTabAndroid.Screen name="Galeria" options = {{tabBarLabel : 'Productos'}} component={AvancesScreen} /> */}
      </BottomTabAndroid.Navigator>
 );
 }
@@ -120,7 +119,7 @@ const TabsIOSNavigator = () => {
         <BottomTabIOS.Screen name="Clientes" options = {{tabBarLabel : 'Clientes'}} component={ClientesScreen} />
         <BottomTabIOS.Screen name="Pedidos" options = {{tabBarLabel : 'Pedidos'}} component={Estadisticas} />
         <BottomTabIOS.Screen name="Productos"  options={{tabBarLabel : 'Productos'}} component={ProductosScreen} />
-        <BottomTabIOS.Screen name="Galeria" options = {{tabBarLabel : 'Galeria'}} component={AvancesScreen} />
+        {/* <BottomTabIOS.Screen name="Galeria" options = {{tabBarLabel : 'Galeria'}} component={AvancesScreen} /> */}
     </BottomTabIOS.Navigator>
   );
 }
