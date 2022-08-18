@@ -4,23 +4,12 @@ export interface LoginResponse {
 }
 
 export interface Usuario {
-    _id : string;
+    id : string;
     nombre: string;
-    cedula : string;
-    fecha_nacimiento : string;
-    sexo : boolean;
-    estado_civil : string;
-    religion : string
-    ocupacion : string
-    lugar_nacimiento : string
-    residencia : string
-    domicilio : string 
-    telefono : string 
-    fecha_actual : string 
-    estado : boolean
-    imagen : string
-    username : string 
-    email : string
+    apellido : string;
+    email ?: string;
+    imagen ?: string;
+    username ?: string; 
 
 }
 
@@ -111,4 +100,14 @@ export enum EstadoPedido{
     PENDIENTE,
     COMPLETADO,
     CANCELADO 
+}
+//NOTIFICACIONES INTERFACES
+export interface Notificacion{
+    channelId : ChannelId
+    title ?: string
+    message ?: string | undefined   
+}
+export enum ChannelId {
+    UNO="1",
+    // DOS=2
 }

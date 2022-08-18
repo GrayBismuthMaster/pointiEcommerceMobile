@@ -12,6 +12,7 @@ import Total from './Total';
 import PedidoContext from '../../context/pedidos/PedidoContext';
 import { Fab } from '../../components/Fab';
 import { Picker } from '@react-native-picker/picker';
+
 const OBTENER_PEDIDOS = gql`
     query obtenerPedidosVendedor{
         obtenerPedidosVendedor{

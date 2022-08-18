@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, {useContext, useState, useEffect} from 'react'
 import { StyleSheet,SafeAreaView, View, Text,  ImageBackground, TouchableOpacity, Dimensions, TextInput, useWindowDimensions, Platform, KeyboardAvoidingView, Keyboard, Alert } from 'react-native'
+import PushNotification from 'react-native-push-notification'
 import { ScreenStackProps } from 'react-native-screens'
 import { Background } from '../components/Background'
 import { Logo } from '../components/Logo'
@@ -55,6 +56,8 @@ export const LoginScreen = ({navigation} : Props) => {
         }
         signIn(obj)
     }
+
+    
     return (
             <>
                 {/*BACKGROUND */}

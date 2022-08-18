@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native'
+import PushNotification from 'react-native-push-notification';
+import { useNotification } from '../../hooks/useNotification';
+import { ChannelId } from '../../interfaces/appInterfaces';
 const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
+
 export const HomeScreen = () => {
+    const {sendNotification} = useNotification({channelId : ChannelId.UNO, message : "prueba", title : "prueba inicial"})
+    useEffect(() => {
+      return () => {
+        console.log("salida homeScreen");
+      }
+    }, [])
+
   const navigation = useNavigation();
   return (
     <SafeAreaView
@@ -18,7 +29,10 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Clientes')
+                // setNotificacion()
+                sendNotification({channelId : ChannelId.UNO, message : "pRUBEA", title : "ASDAS"});
+                // navigation.navigate(('Clientes' as any))
+                
             }}
         >
             <View style = {styles.card}>
@@ -34,7 +48,10 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Pedidos')
+                // setNotificacion({channelId : ChannelId.UNO, title : "Desde pedidos", message : "Mensaje desde pedidos"})
+                sendNotification({channelId : ChannelId.UNO, title : "Desde pedidos", message : "Mensaje desde pedidos"});
+                // navigation.navigate(('Pedidos')as any)
+
             }}
         >
             <View style = {styles.card}>
@@ -50,7 +67,7 @@ export const HomeScreen = () => {
         <TouchableOpacity
             activeOpacity={0.6}
             onPress = { () =>{
-                navigation.navigate('Productos')
+                navigation.navigate(('Productos') as any)
             }}
         >
             <View style = {styles.card}>

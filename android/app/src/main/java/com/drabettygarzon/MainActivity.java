@@ -2,6 +2,7 @@ package com.drabettygarzon;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+import android.content.Intent;
 
 public class MainActivity extends ReactActivity {
 
@@ -18,4 +19,10 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
   }
+  
+  @Override
+  public void onNewIntent(Intent intent) {
+      super.onNewIntent(intent);
+  }
+
 }

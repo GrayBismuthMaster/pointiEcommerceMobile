@@ -2,9 +2,10 @@ import React, {createContext, useReducer, useEffect} from 'react'
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 
 import dermatologiaApi from '../api/dermatologiaApi';
-import { Usuario, LoginResponse, LoginData, RegisterData } from '../interfaces/appInterfaces'
+import { Usuario, LoginData, RegisterData } from '../interfaces/appInterfaces'
 import { authReducer, AuthState } from './authReducer';
 import { useMutation, gql } from '@apollo/client';
+import jwt_decode from "jwt-decode";
 const AUTENTICAR_USUARIO = gql`
     mutation autenticarUsuario($input:AutenticarInput)
     {
@@ -41,6 +42,10 @@ export const AuthProvider = ({children} : any)=>{
 
     const [state, dispatch] = useReducer(authReducer, authInitialState);
     useEffect(()=>{
+        // if(state.token!==null){
+        //     checkToken();
+        // }
+        // console.log(state);
         checkToken();
     },[])    
     //Verificar token 
@@ -77,8 +82,17 @@ export const AuthProvider = ({children} : any)=>{
             })
             console.log("entta");
             console.log(data)
-            const {token, user} = data.autenticarUsuario;
-            console.log('usuario', user);
+            const {token} = data.autenticarUsuario;
+            var decoded = jwt_decode(token);
+            const {id,nombre, apellido} : any = decoded;
+            const user = {
+                id,  
+                nombre,
+                apellido,
+                email
+            }
+            
+            console.log('token', token);
             await AsyncStorage.setItem('token',token);
             await AsyncStorage.setItem('user',JSON.stringify(user));
             dispatch({

@@ -9,10 +9,11 @@ export const Logo = () => {
             }}
         >
             <Image
-                source={require('../assets/Home/LogoDermatologiaHG.png')}
+                source={require('../assets/Home/Logo.jpeg')}
                 style={{
                     width: 110,
-                    height: 100
+                    height: 100,
+                    borderRadius : 10
                 }}
             >
                 

@@ -58,9 +58,9 @@ const AsignarProductos = () => {
             agregarProductos(productosEstadoGlobal )
         }
         
-      return () => {
-        console.log("unmount")
-      }
+        return () => {
+            console.log("unmount")
+        }
     }, [JSON.stringify(productosSeleccionados)])
     
     if (loading) return null;
