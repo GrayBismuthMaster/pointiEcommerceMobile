@@ -3912,6 +3912,11 @@
   dependencies:
     "tslib" "^2.1.0"
 
+"graphql-ws@^5.8.1":
+  "integrity" "sha512-MKm/3SRd1vj5Km8NaujsgeGRTKZQjUN5HRnIMJ8dL2UznKoxvrtQyJqTmqJt0f6vQd9AooDg/+baXo3huiY4Ew=="
+  "resolved" "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.10.1.tgz"
+  "version" "5.10.1"
+
 "graphql@^16.5.0":
   "integrity" "sha512-qbHgh8Ix+j/qY+a/ZcJnFQ+j8ezakqPiHwPiZhV/3PgGlgf96QMBB5/f2rkiC9sgLoy/xvT6TSiaf2nTHJh5iA=="
   "resolved" "https://registry.npmjs.org/graphql/-/graphql-16.5.0.tgz"

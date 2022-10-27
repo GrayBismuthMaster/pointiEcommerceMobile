@@ -4,16 +4,27 @@ import { View, Text, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Ima
 import PushNotification from 'react-native-push-notification';
 import { useNotification } from '../../hooks/useNotification';
 import { ChannelId } from '../../interfaces/appInterfaces';
+import { useMessages } from '../../graphql/hooks';
 const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
-    const {sendNotification} = useNotification({channelId : ChannelId.UNO, message : "prueba", title : "prueba inicial"})
+    //MENSAJES DESDE WEBSOCETS
+    
+    const {messages} = useMessages();
+
+
+    const {sendNotification} = useNotification({channelId : ChannelId.UNO, message : "ESTOS SON SUS NUEVOS PRODUCTOS", title : "NOTIFICACIONES DE PRODUCTOS NUEVOS"})
     useEffect(() => {
-      return () => {
+            if(messages.length>0){
+                console.log("Mensaje ultimo",messages ? messages[messages.length-1]?.text : "")
+                let lastMessage = messages[messages.length-1].text ;
+                sendNotification({channelId : ChannelId.UNO, message : lastMessage ? lastMessage : "" , title : "PRODUCTO NUEVO"});        
+            }
+            return () => {
         console.log("salida homeScreen");
       }
-    }, [])
+    }, [messages])
 
   const navigation = useNavigation();
   return (

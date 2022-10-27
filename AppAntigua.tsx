@@ -3,16 +3,11 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthProvider } from './src/context/AuthContext'
 import { StackNavigator } from './src/Navigation/StackNavigator'
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context'
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import PedidoState from './src/context/pedidos/PedidoState'
 import PushNotification from 'react-native-push-notification'
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient as createWsClient } from 'graphql-ws';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { Kind, OperationTypeNode } from 'graphql';
-
 PushNotification.createChannel(
   {
     channelId: "1", // (required)
@@ -61,25 +56,10 @@ PushNotification.createChannel(
 const AppState = ({children}:any) =>{
   
 
- 
-const httpLink = new HttpLink({
-  uri: 'http://192.168.100.34:9000/graphql',
-});
-
-const wsLink =
-    new GraphQLWsLink(createWsClient({
-        url: 'ws://192.168.100.34:9000/graphql',
-        // connectionParams: () => ({ accessToken: getAccessToken() }),
-    }))
-
-
-
-function isSubscription({ query } : any) {
-    const definition = getMainDefinition(query);
-    return definition.kind === Kind.OPERATION_DEFINITION
-        && definition.operation === OperationTypeNode.SUBSCRIPTION;
-}
-
+  const httpLink = createHttpLink({
+    uri: 'http:/192.168.100.34:4000/',
+    fetch
+  })
   // Initialize Apollo Client
   const authLink = setContext( async (_,{headers}) => {
     console.log('headers',headers);
@@ -94,16 +74,11 @@ function isSubscription({ query } : any) {
         }
     }
 });
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: authLink.concat(httpLink)
+  });
 
-
-  
-const client = new ApolloClient({
-  // сonnectToDevTools: true,
-  cache: new InMemoryCache(),
-  link: split(isSubscription, wsLink, authLink.concat(httpLink) )
-
-    
-});
   return(
     <ApolloProvider client={client}>
       <AuthProvider>
